@@ -65,6 +65,7 @@ var World = {
     },
 
     setTarget(name, latitude, longitude) {
+
         var singlePoi = {
             "id": "1",
             "latitude": parseFloat(latitude),
@@ -74,12 +75,10 @@ var World = {
             "description": ""
         };
 
-        let marker = new Marker(singlePoi)
-        marker.setSelected(marker)
-        World.currentMarker = marker
+        World.currentMarker = new Marker(singlePoi)
+        World.currentMarker.setSelected(World.currentMarker)
+        
     },
-
-    
 
     /* Location updates, fired every time you call architectView.setLocation() in native environment. */
     locationChanged: function locationChangedFn(lat, lon, alt, acc) {

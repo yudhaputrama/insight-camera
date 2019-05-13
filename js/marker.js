@@ -44,23 +44,23 @@ function Marker(poiData) {
     this.titleLabel = new AR.Label(poiData.title.trunc(10), 1, {
         zOrder: 1,
         translate: {
-            y: 0.55
+            y: 0
         },
         style: {
-            textColor: '#FFFFFF',
+            textColor: '#3F3D56',
             fontStyle: AR.CONST.FONT_STYLE.BOLD
         }
     });
 
-    this.descriptionLabel = new AR.Label(poiData.description.trunc(15), 0.8, {
-        zOrder: 1,
-        translate: {
-            y: -0.55
-        },
-        style: {
-            textColor: '#FFFFFF'
-        }
-    });
+    // this.descriptionLabel = new AR.Label(poiData.description.trunc(15), 0.8, {
+    //     zOrder: 1,
+    //     translate: {
+    //         y: -0.55
+    //     },
+    //     style: {
+    //         textColor: '#FFFFFF'
+    //     }
+    // });
 
     /*
         Create an AR.ImageDrawable using the AR.ImageResource for the direction indicator which was created in the
@@ -79,7 +79,7 @@ function Marker(poiData) {
     */
     this.markerObject = new AR.GeoObject(markerLocation, {
         drawables: {
-            cam: [this.markerDrawableIdle, this.markerDrawableSelected, this.titleLabel, this.descriptionLabel],
+            cam: [this.markerDrawableIdle, this.markerDrawableSelected, this.titleLabel],
             indicator: this.directionIndicatorDrawable
         }
     });
@@ -155,8 +155,8 @@ Marker.prototype.setSelected = function(marker) {
         var titleLabelResizeAnimationX = new AR.PropertyAnimation(
             marker.titleLabel, 'scale.x', null, 1.2, resizeAnimationDuration, easingCurve);
         /* Create AR.PropertyAnimation that animates the scaling of the description label to 1.2. */
-        var descriptionLabelResizeAnimationX = new AR.PropertyAnimation(
-            marker.descriptionLabel, 'scale.x', null, 1.2, resizeAnimationDuration, easingCurve);
+        // var descriptionLabelResizeAnimationX = new AR.PropertyAnimation(
+        //     marker.descriptionLabel, 'scale.x', null, 1.2, resizeAnimationDuration, easingCurve);
 
         /* Create AR.PropertyAnimation that animates the scaling of the idle-state-drawable to 1.2. */
         var idleDrawableResizeAnimationY = new AR.PropertyAnimation(
@@ -168,8 +168,8 @@ Marker.prototype.setSelected = function(marker) {
         var titleLabelResizeAnimationY = new AR.PropertyAnimation(
             marker.titleLabel, 'scale.y', null, 1.2, resizeAnimationDuration, easingCurve);
         /* Create AR.PropertyAnimation that animates the scaling of the description label to 1.2. */
-        var descriptionLabelResizeAnimationY = new AR.PropertyAnimation(
-            marker.descriptionLabel, 'scale.y', null, 1.2, resizeAnimationDuration, easingCurve);
+        // var descriptionLabelResizeAnimationY = new AR.PropertyAnimation(
+        //     marker.descriptionLabel, 'scale.y', null, 1.2, resizeAnimationDuration, easingCurve);
 
         /*
             There are two types of AR.AnimationGroups. Parallel animations are running at the same time,
@@ -181,11 +181,11 @@ Marker.prototype.setSelected = function(marker) {
             idleDrawableResizeAnimationX,
             selectedDrawableResizeAnimationX,
             titleLabelResizeAnimationX,
-            descriptionLabelResizeAnimationX,
+            // descriptionLabelResizeAnimationX,
             idleDrawableResizeAnimationY,
             selectedDrawableResizeAnimationY,
             titleLabelResizeAnimationY,
-            descriptionLabelResizeAnimationY
+            // descriptionLabelResizeAnimationY
         ]);
     }
 
@@ -225,8 +225,8 @@ Marker.prototype.setDeselected = function(marker) {
         var titleLabelResizeAnimationX = new AR.PropertyAnimation(
             marker.titleLabel, 'scale.x', null, 1.0, resizeAnimationDuration, easingCurve);
         /* Create AR.PropertyAnimation that animates the scaling of the description label to 1.0. */
-        var descriptionLabelResizeAnimationX = new AR.PropertyAnimation(
-            marker.descriptionLabel, 'scale.x', null, 1.0, resizeAnimationDuration, easingCurve);
+        // var descriptionLabelResizeAnimationX = new AR.PropertyAnimation(
+        //     marker.descriptionLabel, 'scale.x', null, 1.0, resizeAnimationDuration, easingCurve);
         /* Create AR.PropertyAnimation that animates the scaling of the idle-state-drawable to 1.0. */
         var idleDrawableResizeAnimationY = new AR.PropertyAnimation(
             marker.markerDrawableIdle, 'scale.y', null, 1.0, resizeAnimationDuration, easingCurve);
@@ -237,8 +237,8 @@ Marker.prototype.setDeselected = function(marker) {
         var titleLabelResizeAnimationY = new AR.PropertyAnimation(
             marker.titleLabel, 'scale.y', null, 1.0, resizeAnimationDuration, easingCurve);
         /* Create AR.PropertyAnimation that animates the scaling of the description label to 1.0. */
-        var descriptionLabelResizeAnimationY = new AR.PropertyAnimation(
-            marker.descriptionLabel, 'scale.y', null, 1.0, resizeAnimationDuration, easingCurve);
+        // var descriptionLabelResizeAnimationY = new AR.PropertyAnimation(
+        //     marker.descriptionLabel, 'scale.y', null, 1.0, resizeAnimationDuration, easingCurve);
 
         /*
             There are two types of AR.AnimationGroups. Parallel animations are running at the same time,
@@ -250,11 +250,11 @@ Marker.prototype.setDeselected = function(marker) {
             idleDrawableResizeAnimationX,
             selectedDrawableResizeAnimationX,
             titleLabelResizeAnimationX,
-            descriptionLabelResizeAnimationX,
+            // descriptionLabelResizeAnimationX,
             idleDrawableResizeAnimationY,
             selectedDrawableResizeAnimationY,
             titleLabelResizeAnimationY,
-            descriptionLabelResizeAnimationY
+            // descriptionLabelResizeAnimationY
         ]);
     }
 
