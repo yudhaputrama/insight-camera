@@ -64,14 +64,32 @@ var World = {
         });
     },
 
+    setTarget(name, latitude, longitude) {
+        var singlePoi = {
+            "id": 1,
+            "latitude": parseFloat(latitude),
+            "longitude": parseFloat(longitude),
+            "altitude": parseFloat(10),
+            "title": name,
+            "description": ""
+        };
+
+        let marker = new Marker(singlePoi)
+        marker.setSelected(marker)
+        World.currentMarker = marker
+    },
+
+    
+
     /* Location updates, fired every time you call architectView.setLocation() in native environment. */
     locationChanged: function locationChangedFn(lat, lon, alt, acc) {
 
         /* Request data if not already present. */
-        if (!World.initiallyLoadedData) {
-            World.requestDataFromLocal(lat, lon);
-            World.initiallyLoadedData = true;
-        }
+        // if (!World.initiallyLoadedData) {
+        //     World.requestDataFromLocal(lat, lon);
+        //     World.initiallyLoadedData = true;
+        // }
+        
     },
 
     /* Fired when user pressed maker in cam. */
@@ -109,16 +127,14 @@ var World = {
 
         // var poisNearby = Helper.bringPlacesToUser(myJsonData, lat, lon);
         // World.loadPoisFromJsonData(poisNearby);
-
-        /*
-            For demo purpose they are relocated randomly around the user using a 'Helper'-function.
-            Comment out previous 2 lines and use the following line > instead < to use static values 1:1.
-        */
         World.loadPoisFromJsonData(myJsonData);
     },
 
     onError: function onErrorFn(error) {
         alert(error)
+    },
+    log: function(message) {
+        console.log(`World : ${message}`)
     }
 };
 
@@ -139,6 +155,8 @@ var Helper = {
         return poiData;
     }
 };
+
+console.log(AR)
 
 /* Forward locationChanges to custom function. */
 AR.context.onLocationChanged = World.locationChanged;
