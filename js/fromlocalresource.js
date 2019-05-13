@@ -85,10 +85,22 @@ var World = {
     locationChanged: function locationChangedFn(lat, lon, alt, acc) {
 
         /* Request data if not already present. */
-        // if (!World.initiallyLoadedData) {
-        //     World.requestDataFromLocal(lat, lon);
-        //     World.initiallyLoadedData = true;
-        // }
+        if (!World.initiallyLoadedData) {
+            // World.requestDataFromLocal(lat, lon);
+            /* Start loading marker assets. */
+            World.markerDrawableIdle = new AR.ImageResource("assets/marker_idle.png", {
+                onError: World.onError
+            });
+            World.markerDrawableSelected = new AR.ImageResource("assets/marker_selected.png", {
+                onError: World.onError
+            });
+            World.markerDrawableDirectionIndicator = new AR.ImageResource("assets/indi.png", {
+                onError: World.onError
+            });
+            
+            World.initiallyLoadedData = true;
+            
+        }
         
     },
 
