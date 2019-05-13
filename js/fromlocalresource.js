@@ -66,7 +66,7 @@ var World = {
 
     setTarget(name, latitude, longitude) {
         var singlePoi = {
-            "id": 1,
+            "id": "1",
             "latitude": parseFloat(latitude),
             "longitude": parseFloat(longitude),
             "altitude": parseFloat(10),
@@ -97,7 +97,7 @@ var World = {
             World.markerDrawableDirectionIndicator = new AR.ImageResource("assets/indi.png", {
                 onError: World.onError
             });
-            
+
             World.initiallyLoadedData = true;
             
         }
