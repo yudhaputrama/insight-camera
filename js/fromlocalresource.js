@@ -65,6 +65,19 @@ var World = {
     },
 
     setTarget(name, latitude, longitude) {
+        /* Empty list of visible markers. */
+        World.markerList = [];
+
+        /* Start loading marker assets. */
+        World.markerDrawableIdle = new AR.ImageResource("assets/marker_idle.png", {
+            onError: World.onError
+        });
+        World.markerDrawableSelected = new AR.ImageResource("assets/marker_selected.png", {
+            onError: World.onError
+        });
+        World.markerDrawableDirectionIndicator = new AR.ImageResource("assets/indi.png", {
+            onError: World.onError
+        });
 
         var singlePoi = {
             "id": "1",
@@ -79,7 +92,7 @@ var World = {
 
         World.currentMarker = new Marker(singlePoi)
         World.currentMarker.setSelected(World.currentMarker)
-        
+        World.updateStatusMessage(currentPlaceNr + ' places loaded');
     },
 
     /* Location updates, fired every time you call architectView.setLocation() in native environment. */
