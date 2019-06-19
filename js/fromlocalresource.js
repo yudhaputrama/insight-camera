@@ -75,6 +75,8 @@ var World = {
             "description": ""
         };
 
+        console.log(`SetTarget: ${name}, ${latitude}, ${longitude}`)
+
         World.currentMarker = new Marker(singlePoi)
         World.currentMarker.setSelected(World.currentMarker)
         
