@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    
+    <title>Firebase management</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .marker {
+            background-image: url('assets/mapbox-icon.png');
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .container {
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div id='map'></div>
+            </div>
+            <div class="col col-lg-2"></div>
+        </div>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoieXVkaGFwdXRyYW1hIiwiYSI6ImNpaDRldmI1ZjB5dWg2NW0wa3d1ZTZrbTQifQ.c2Z91ClYEUFMjdJWz4_uoA';
+        
+        var map = new mapboxgl.Map({
+            container: 'map',
+            maxZoom: 24,
+            minZoom: 18,
+            zoom: 19,
+            center: [107.63261675834656, -6.9731803736465165],
+            style: "mapbox://styles/mapbox/streets-v11"
+        });
+        // -6.97269, 107.6321), // top left
+        //         LatLng(-6.97269, 107.6331), // top right
+        //         LatLng(), // bottom right
+        //         LatLng(-6.97369, 107.6321
+        map.on('load', function() {
+            map.addSource("overlay",{
+                type: "image",
+                url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_4.png",
+                coordinates: [
+                    [107.6321, -6.97269],
+                    [107.6331, -6.97269],
+                    [107.6331, -6.97369],
+                    [107.6321, -6.97369]
+                ]
+            })
+
+            map.addLayer({
+                "id": "overlay",
+                "source": "overlay",
+                "type": "raster",
+                "paint": {"raster-opacity": 0.85}
+            })
+
+            var geojson = {
+                type: 'FeatureCollection',
+                features: [{
+                    type: 'Feature',
+                    geometry: {
+                    type: 'Point',
+                    coordinates: [107.63267382823821, -6.973161015019912]
+                    },
+                    properties: {
+                    title: 'Center',
+                    description: 'Calculated position'
+                    }
+                }]
+            };
+
+            geojson.features.forEach(function(marker) {
+
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'marker';
+
+                // make a marker for each feature and add to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .addTo(map);
+            });
+            // -6.973161015019912 107.63267382823821
+        })
+
+        map.on('click', function(data) {
+            console.log(data)
+        })
+
+    </script>
+    
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyBfboQSVBjTYM9ZUDuKvpaTqdYaDij1-ws",
+          authDomain: "insight-navigation.firebaseapp.com",
+          databaseURL: "https://insight-navigation.firebaseio.com",
+          projectId: "insight-navigation",
+          storageBucket: "insight-navigation.appspot.com",
+          messagingSenderId: "565024928251",
+          appId: "1:565024928251:web:92656fd86454e203"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>
