@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8' />
     
-    <title>Firebase management</title>
+    <title>Insight Management</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
@@ -23,6 +23,14 @@
             width: 100%;
             height: 100vh;
         }
+        .map-container {
+            position: relative;
+        }
+        .map-overlay {
+            position: absolute;
+            /* top: 20px;
+            left: 20px; */
+        }
 
         .marker {
             background-image: url('assets/mapbox-icon.png');
@@ -39,16 +47,34 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div id='map'></div>
-            </div>
-            <div class="col col-lg-2"></div>
+    <div>
+        <div id='map'></div>
+        <div class="map-overlay">
+            <button class="btn btn-primary" id="floor-1">Floor 1</button>
+            <button class="btn btn-primary" id="floor-2">Floor 2</button>
+            <button class="btn btn-primary" id="floor-3">Floor 3</button>
+            <button class="btn btn-primary" id="floor-4">Floor 4</button>
         </div>
     </div>
-    
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -63,20 +89,22 @@
             center: [107.63261675834656, -6.9731803736465165],
             style: "mapbox://styles/mapbox/streets-v11"
         });
-        // -6.97269, 107.6321), // top left
-        //         LatLng(-6.97269, 107.6331), // top right
-        //         LatLng(), // bottom right
-        //         LatLng(-6.97369, 107.6321
+
+        // (-6.97269, 107.6321), // top left
+        // (-6.97269, 107.6331), // top right
+        // (-6.97369, 107.6331), // bottom right
+        // (-6.97369, 107.6321), // bottom left
+        var boundCoordinates = [
+            [107.6321, -6.97269],
+            [107.6331, -6.97269],
+            [107.6331, -6.97369],
+            [107.6321, -6.97369]
+        ]
         map.on('load', function() {
             map.addSource("overlay",{
                 type: "image",
-                url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_4.png",
-                coordinates: [
-                    [107.6321, -6.97269],
-                    [107.6331, -6.97269],
-                    [107.6331, -6.97369],
-                    [107.6321, -6.97369]
-                ]
+                url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_1.png",
+                coordinates: boundCoordinates
             })
 
             map.addLayer({
@@ -88,31 +116,57 @@
 
             var geojson = {
                 type: 'FeatureCollection',
-                features: [{
-                    type: 'Feature',
-                    geometry: {
-                    type: 'Point',
-                    coordinates: [107.63267382823821, -6.973161015019912]
-                    },
-                    properties: {
-                    title: 'Center',
-                    description: 'Calculated position'
+                features: [
+                    {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [107.63267382823821, -6.973161015019912]
+                        },
+                        properties: {
+                            title: 'Center',
+                            description: 'Calculated position'
+                        }
                     }
-                }]
+                ]
             };
 
             geojson.features.forEach(function(marker) {
 
                 // create a HTML element for each feature
-                var el = document.createElement('div');
-                el.className = 'marker';
+                var el = document.createElement('div')
+                el.className = 'marker'
 
                 // make a marker for each feature and add to the map
                 new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
-                    .addTo(map);
+                    .addTo(map)
             });
             // -6.973161015019912 107.63267382823821
+
+            $('.btn').click((event)=> {
+                if (event.currentTarget.id === "floor-1")  {
+                    map.getSource("overlay").updateImage({
+                        url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_1.png",
+                        coordinates: boundCoordinates
+                    })
+                } else if (event.currentTarget.id === "floor-2") {
+                    map.getSource("overlay").updateImage({
+                        url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_2.png",
+                        coordinates: boundCoordinates
+                    })
+                } else if (event.currentTarget.id === "floor-3") {
+                    map.getSource("overlay").updateImage({
+                        url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_3.png",
+                        coordinates: boundCoordinates
+                    })
+                } else if (event.currentTarget.id === "floor-4") {
+                    map.getSource("overlay").updateImage({
+                        url: "https://yudhaputrama.github.io/insight-camera/assets/peta_lantai_4.png",
+                        coordinates: boundCoordinates
+                    })
+                }
+            })
         })
 
         map.on('click', function(data) {
