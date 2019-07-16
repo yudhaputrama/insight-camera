@@ -41,21 +41,10 @@ function Marker(poiData) {
     });
 
     /* Create an AR.Label for the marker's title . */
-    this.titleLabel = new AR.Label(poiData.title.trunc(15), 0.5, {
+    this.titleLabel = new AR.Label(poiData.title.trunc(20), 0.5, {
         zOrder: 1,
         translate: {
-            y: -10
-        },
-        style: {
-            textColor: '#3F3D56',
-            fontStyle: AR.CONST.FONT_STYLE.BOLD
-        }
-    });
-
-    this.distanceLabel = new AR.Label(`100 m`, 0.5, {
-        zOrder: 1,
-        translate: {
-            y: 10
+            y: 0
         },
         style: {
             textColor: '#3F3D56',
