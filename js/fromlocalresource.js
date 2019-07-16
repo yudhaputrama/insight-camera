@@ -93,7 +93,7 @@ var World = {
 
         World.currentMarker = new Marker(singlePoi)
         World.currentMarker.setSelected(World.currentMarker)
-        World.updateStatusMessage(currentPlaceNr + ' places loaded');
+        // World.updateStatusMessage(currentPlaceNr + ' places loaded');
     },
 
     /* Location updates, fired every time you call architectView.setLocation() in native environment. */
