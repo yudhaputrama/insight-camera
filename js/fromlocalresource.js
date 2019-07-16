@@ -35,18 +35,18 @@ var World = {
         });
 
         /* Loop through POI-information and create an AR.GeoObject (=Marker) per POI. */
-        for (var currentPlaceNr = 0; currentPlaceNr < poiData.length; currentPlaceNr++) {
-            var singlePoi = {
-                "id": poiData[currentPlaceNr].id,
-                "latitude": parseFloat(poiData[currentPlaceNr].latitude),
-                "longitude": parseFloat(poiData[currentPlaceNr].longitude),
-                "altitude": parseFloat(poiData[currentPlaceNr].altitude),
-                "title": poiData[currentPlaceNr].name,
-                "description": poiData[currentPlaceNr].description
-            };
+        // for (var currentPlaceNr = 0; currentPlaceNr < poiData.length; currentPlaceNr++) {
+        //     var singlePoi = {
+        //         "id": poiData[currentPlaceNr].id,
+        //         "latitude": parseFloat(poiData[currentPlaceNr].latitude),
+        //         "longitude": parseFloat(poiData[currentPlaceNr].longitude),
+        //         "altitude": parseFloat(poiData[currentPlaceNr].altitude),
+        //         "title": poiData[currentPlaceNr].name,
+        //         "description": poiData[currentPlaceNr].description
+        //     };
 
-            World.markerList.push(new Marker(singlePoi));
-        }
+        //     World.markerList.push(new Marker(singlePoi));
+        // }
 
         World.updateStatusMessage(currentPlaceNr + ' places loaded');
     },
@@ -116,6 +116,7 @@ var World = {
             World.initiallyLoadedData = true;
             
         }
+        console.log('Location Change', lat, lon, alt, acc)
         World.updateDistance();
     },
 
