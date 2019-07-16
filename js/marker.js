@@ -30,7 +30,7 @@ function Marker(poiData) {
             which checks the selected state with the help of the variable isSelected and executes the appropriate
             function. The clicked marker is passed as an argument.
         */
-        onClick: Marker.prototype.getOnClickTrigger(this)
+        // onClick: Marker.prototype.getOnClickTrigger(this)
     });
 
     /* Create an AR.ImageDrawable for the marker in selected state. */
@@ -41,7 +41,7 @@ function Marker(poiData) {
     });
 
     /* Create an AR.Label for the marker's title . */
-    this.titleLabel = new AR.Label(poiData.title.trunc(10), 1, {
+    this.titleLabel = new AR.Label(poiData.title.trunc(15), 0.5, {
         zOrder: 1,
         translate: {
             y: 0

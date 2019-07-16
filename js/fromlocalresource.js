@@ -53,6 +53,7 @@ var World = {
 
     /* Updates status message shown in small "i"-button aligned bottom center. */
     updateStatusMessage: function updateStatusMessageFn(message, isWarning) {
+        console.log(message)
 
         var themeToUse = isWarning ? "e" : "c";
         var iconToUse = isWarning ? "alert" : "info";
@@ -115,7 +116,11 @@ var World = {
             World.initiallyLoadedData = true;
             
         }
-        
+        World.updateDistance();
+    },
+
+    updateDistance: function() {
+
     },
 
     /* Fired when user pressed maker in cam. */
